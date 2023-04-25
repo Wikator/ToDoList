@@ -1,0 +1,57 @@
+﻿@page
+@model UserRoleManagerModel
+
+@{
+	ViewData["Title"] = "User Manager";
+}
+
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-black py-2">Users</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body bg-primary bg-gradient p-4">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered" style="width:100%">
+				<thead>
+					<tr>
+						<th>
+							Email
+						</th>
+						<th>
+							Role
+						</th>
+						<th>
+							Manage
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var obj in Model.Input)
+					{
+						<tr>
+							<td width="60%">
+								@obj.IdentityUser.Email
+							</td>
+							<td width="25%">
+								@obj.Role
+							</td>
+							<td width="15%">
+								<div class="w-75 btn-group" role="group">
+									@if (obj.Role != ToDoList.Utility.SD.Role_User_Owner)
+									{
+										<a asp-area="Owner" asp-page="/RoleManager/EditUserRole" asp-route-id="@obj.IdentityUser.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil"></i></a>
+									}
+								</div>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

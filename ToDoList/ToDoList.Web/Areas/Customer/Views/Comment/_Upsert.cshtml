@@ -1,0 +1,13 @@
+﻿@model Comment
+
+
+<div class="mb-3">
+	<label asp-for="Text"></label>
+	<textarea asp-for="Text" class="form-control border-0 shadow"></textarea>
+	<span asp-validation-for="Text" class="text-danger"></span>
+</div>
+<div class="mb-3">
+	<label asp-for="FileUrl"></label>
+	<input type="file" id="uploadBox" name="file" class="form-control border-0 shadow" />
+	<span asp-validation-for="FileUrl" class="text-danger"></span>
+</div>

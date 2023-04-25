@@ -1,0 +1,35 @@
+﻿@model Group
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-black py-2">Create Group</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body bg-primary p-4">
+		<form method="post" asp-action="Create">
+			<div class="p-3 row">
+				<partial name="_Upsert" model="@Model" />
+				<div class="mb-3">
+					<button type="submit" class="btn btn-primary">Create</button>
+					<a asp-action="Index" class="btn btn-dark" style="width:200px">
+						Back to list
+					</a>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+@section Scripts{
+	@{
+		<partial name="_ValidationScriptsPartial" />
+	}
+}

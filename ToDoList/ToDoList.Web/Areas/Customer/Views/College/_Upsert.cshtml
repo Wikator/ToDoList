@@ -1,0 +1,70 @@
+﻿@model CollegeVM
+
+
+<div class="form-floating py-2 col-12">
+	<input asp-for="ListItem.Title" type="text" class="form-control border-0 shadow" placeholder="Title" />
+	<label asp-for="ListItem.Title" class="ms-2">Title</label>
+	<span asp-validation-for="ListItem.Title" class="text-danger"></span>
+</div>
+<div class="form-floating py-2 col-12">
+	<textarea asp-for="ListItem.Description" class="form-control border-0 shadow" style="height: 100px" placeholder="Description"></textarea>
+	<label asp-for="ListItem.Description" class="ms-2">Description</label>
+	<span asp-validation-for="ListItem.Description" class="text-danger"></span>
+</div>
+@if (User.IsInRole(ToDoList.Utility.SD.Role_User_Admin) || User.IsInRole(ToDoList.Utility.SD.Role_User_Owner))
+{
+	<div class="form-floating py-2 col-6">
+		<select asp-for="ListItem.SubjectId" asp-items="@Model.Subjects" class="form-select border-0 shadow">
+			<option disabled selected>--Select subject--</option>
+		</select>
+		<label asp-for="ListItem.SubjectId" class="ms-2"></label>
+		<span asp-validation-for="ListItem.SubjectId" class="text-danger"></span>
+	</div>
+	<div class="col-6">
+		<div id="NoneGroupInput">
+			<div class="py-2 form-floating">
+				<select class="form-select border-0 shadow">
+					<option>???</option>
+				</select>
+				<label class="ms-2">Group</label>
+			</div>
+		</div>
+		<div class="d-none" id="Group1Input">
+			<div class="py-2 form-floating">
+				<select asp-for="Group1Id" class="form-select border-0 shadow" asp-items="@Model.Groups1">
+				</select>
+				<span asp-validation-for="Group1Id" class="text-danger"></span>
+				<label id="Group1IdLabel" class="ms-2" asp-for="Group1Id">Group</label>
+			</div>
+		</div>
+		<div class="d-none" id="Group2Input">
+			<div class="py-2 form-floating">
+				<select asp-for="Group2Id" class="form-select border-0 shadow" asp-items="@Model.Groups2">
+				</select>
+				<span asp-validation-for="Group2Id" class="text-danger"></span>
+				<label id="Group2IdLabel" class="ms-2" asp-for="Group2Id">Group</label>
+			</div>
+		</div>
+		<div class="d-none" id="Group3Input">
+			<div class="py-2 form-floating">
+				<select asp-for="Group3Id" class="form-select border-0 shadow" asp-items="@Model.Groups3">
+				</select>
+				<span asp-validation-for="Group3Id" class="text-danger"></span>
+				<label id="Group3IdLabel" class="ms-2" asp-for="Group3Id">Group</label>
+			</div>
+		</div>
+	</div>
+}
+else
+{
+	<div class="form-floating py-2 col-12">
+		<select asp-for="ListItem.SubjectId" asp-items="@Model.Subjects" class="form-select border-0 shadow">
+			<option disabled selected>--Select subject--</option>
+		</select>
+		<label asp-for="ListItem.SubjectId" class="ms-2"></label>
+		<span asp-validation-for="ListItem.SubjectId" class="text-danger"></span>
+	</div>
+	<input asp-for="Group1Id" hidden />
+	<input asp-for="Group2Id" hidden />
+	<input asp-for="Group3Id" hidden />
+}

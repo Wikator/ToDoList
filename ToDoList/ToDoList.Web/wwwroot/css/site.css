@@ -1,0 +1,43 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-top: 5em;
+  margin-bottom: 60px;
+}
+
+.btn-round {
+  border-radius: 40px;
+}
+
+.btn-green-hover:hover {
+    color: #62c462 !important;
+    box-shadow: 0 0 0.85em #62c462;
+}
+
+.btn-green-hover:focus-within {
+    color: #62c462 !important;
+    box-shadow: 0 0 0.85em #62c462;
+}
+
+.btn-red-hover:hover {
+    color: #ee5f5b !important;
+    box-shadow: 0 0 0.85em #ee5f5b;
+}
+
+.btn-red-hover:focus-within {
+    color: #ee5f5b !important;
+    box-shadow: 0 0 0.85em #ee5f5b;
+}

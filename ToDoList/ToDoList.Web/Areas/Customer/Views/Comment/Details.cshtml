@@ -1,0 +1,59 @@
+﻿@model Comment
+
+@{
+	ViewData["Title"] = "Comments";
+}
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-black py-2">@{@Model.ApplicationUser.Nickname}'s comment</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body bg-primary bg-gradient p-4">
+		<div>
+			<dl class="row">
+				<dt class="col-sm-2">
+					Text
+				</dt>
+				<dd class="col-sm-10">
+					@Model.Text
+				</dd>
+				@if (@Model.FileUrl != null)
+				{
+					<dt class="col-sm-2">
+						File
+					</dt>
+					<dd class="col-sm-10">
+						<a asp-action="Download" asp-route-fileUrl="@Model.FileUrl">File</a> (@System.IO.Path.GetExtension(Model.FileUrl))
+					</dd>
+				}
+			</dl>
+			<br />
+			<br />
+
+			@if (ViewBag.IsOwner)
+			{
+				<div class="row pt-4">
+					<div class="col-6">
+						<a asp-action="Edit" asp-route-commentId="@Model.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i> Edit</a>
+						<a onCLick=Delete('/Customer/Comment/Delete/@Model.Id') class="btn btn-danger mx-2"><i class="bi bi-x-circle"></i> Delete</a>
+					</div>
+				</div>
+			}
+
+			<div class="row pt-4">
+				<div class="col-6">
+					<a asp-action="Index" asp-route-collegeId="@Model.CollegeId" class="btn btn-primary mx-2">Back to list</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts {
+	<script src="~/js/delete.js"></script>
+}
