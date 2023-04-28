@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.DataAccess.Data;
 using ToDoList.DataAccess.DbInitializer;
-using ToDoList.DataAccess.Repository;
-using ToDoList.DataAccess.Repository.IRepository;
-using ToDoList.Utility;
+using ToDoList.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,32 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
-    .AddDefaultUI()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireAdmin", policy => policy.RequireRole(SD.Role_User_Admin, SD.Role_User_Owner));
-    options.AddPolicy("RequireOwner", policy => policy.RequireRole(SD.Role_User_Owner));
-});
-
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/Identity/Account/Login";
-    options.LogoutPath = "/Identity/Account/Logout";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-});
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices();
 
 var app = builder.Build();
 
