@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Security.Claims;
 using ToDoList.DataAccess.Repository.IRepository;
 using ToDoList.Models;
+using ToDoList.Web.Extensions;
 
 namespace ToDoList.Web.Areas.Customer.Controllers
 {
@@ -44,10 +45,9 @@ namespace ToDoList.Web.Areas.Customer.Controllers
 			if (comment is null)
 				return RedirectToAction(nameof(Index), new { collegeId });
 
-			ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-			Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+			string userId = User.GetLoggedInUserId();
 
-			ViewBag.IsOwner = comment.ApplicationUserId == claim.Value;
+			ViewBag.IsOwner = comment.ApplicationUserId == userId;
 
 			return View(comment);
 		}
@@ -58,12 +58,11 @@ namespace ToDoList.Web.Areas.Customer.Controllers
 			if (collegeId is null)
 				return RedirectToAction(nameof(Index), "Home");
 
-			ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-			Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+			string userId = User.GetLoggedInUserId();
 
 			Comment comment = new()
 			{
-				ApplicationUserId = claim.Value,
+				ApplicationUserId = userId,
 				CollegeId = (int)collegeId
 			};
 				
@@ -123,6 +122,11 @@ namespace ToDoList.Web.Areas.Customer.Controllers
 			if (comment is null)
 				return RedirectToAction(nameof(Index), "Home");
 
+			string userId = User.GetLoggedInUserId();
+
+			if (userId != comment.ApplicationUserId)
+				return RedirectToAction(nameof(Index), new { collegeId = comment.CollegeId });
+
 			return View(comment);
 		}
 
@@ -135,12 +139,6 @@ namespace ToDoList.Web.Areas.Customer.Controllers
 			{
 				if (ModelState.IsValid)
 				{
-					ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-					Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
-
-					if (claim.Value != comment.ApplicationUserId)
-							return RedirectToAction(nameof(Index), new { collegeId = comment.CollegeId });
-
 					string wwwRootPath = _hostEnvironment.WebRootPath;
 
 					if (file is not null)

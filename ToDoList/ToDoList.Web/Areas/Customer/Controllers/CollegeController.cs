@@ -5,6 +5,7 @@ using System.Security.Claims;
 using ToDoList.DataAccess.Repository.IRepository;
 using ToDoList.Models;
 using ToDoList.Models.ViewModels;
+using ToDoList.Web.Extensions;
 
 namespace ToDoList.Web.Areas.Customer.Controllers
 {
@@ -24,20 +25,18 @@ namespace ToDoList.Web.Areas.Customer.Controllers
         // GET: CollegeController
         public async Task<IActionResult> Index()
         {
-			ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-			Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+            string userId = User.GetLoggedInUserId();
 
-			IEnumerable<College> collegeList = await _unitOfWork.College.GetAllAsync(filter: x => x.ApplicationUserId == claim.Value, order: x => x.Deadline, includeProperties: "Subject");
+			IEnumerable<College> collegeList = await _unitOfWork.College.GetAllAsync(filter: x => x.ApplicationUserId == userId, order: x => x.Deadline, includeProperties: "Subject");
             return View(collegeList);
         }
 
         // GET: CollegeController/Create
         public async Task<IActionResult> Create()
         {
-            ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-            Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+			string userId = User.GetLoggedInUserId();
 
-            ApplicationUser applicationUser = (await _unitOfWork.ApplicationUser.GetFirstOrDefaultAsync(x => x.Id == claim.Value))!;
+			ApplicationUser applicationUser = (await _unitOfWork.ApplicationUser.GetFirstOrDefaultAsync(x => x.Id == userId))!;
 			Group group = await _unitOfWork.Group.GetFirstOrDefaultAsync(x => x.GroupType == GroupType.None) ?? throw new Exception("Group not found");
 
 
@@ -114,10 +113,9 @@ namespace ToDoList.Web.Areas.Customer.Controllers
         // GET: CollegeController/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-			ClaimsIdentity claimsIdentity = (User.Identity as ClaimsIdentity)!;
-			Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+			string userId = User.GetLoggedInUserId();
 
-			ApplicationUser applicationUser = (await _unitOfWork.ApplicationUser.GetFirstOrDefaultAsync(x => x.Id == claim.Value))!;
+			ApplicationUser applicationUser = (await _unitOfWork.ApplicationUser.GetFirstOrDefaultAsync(x => x.Id == userId))!;
 			Group group = await _unitOfWork.Group.GetFirstOrDefaultAsync(x => x.GroupType == GroupType.None) ?? throw new Exception("Group not found");
             College? college = await _unitOfWork.College.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Group");
 
@@ -187,9 +185,10 @@ namespace ToDoList.Web.Areas.Customer.Controllers
         {
             try
             {
+				string userId = User.GetLoggedInUserId();
 				College? college = await _unitOfWork.College.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "CompletedColleges,Comments");
 
-                if (college is null)
+                if (college is null || college.ApplicationUserId != userId)
                     return Json(new { success = false });
 
                 _unitOfWork.College.RemoveCollege(college, _hostEnvironment.WebRootPath);
