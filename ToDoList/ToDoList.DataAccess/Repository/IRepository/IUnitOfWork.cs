@@ -1,23 +1,26 @@
-﻿using ToDoList.Models;
+﻿#region
 
-namespace ToDoList.DataAccess.Repository.IRepository
+using ToDoList.Models;
+
+#endregion
+
+namespace ToDoList.DataAccess.Repository.IRepository;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-        IRepository<CompletedCollege> CompletedCollege { get; }
+    IRepository<CompletedCollege> CompletedCollege { get; }
 
-        IRepository<Comment> Comment { get; }
+    IRepository<Comment> Comment { get; }
 
-        IRepository<ApplicationUser> ApplicationUser { get; }
+    IRepository<ApplicationUser> ApplicationUser { get; }
 
-        IRepository<Subject> Subject { get; }
+    IRepository<Subject> Subject { get; }
 
-        IRepository<Group> Group { get; }
+    IRepository<Group> Group { get; }
 
-        ICollegeRepository College { get; }
+    ICollegeRepository College { get; }
 
-        ISubjectTimeRepository SubjectTime { get; }
+    ISubjectTimeRepository SubjectTime { get; }
 
-        Task SaveAsync();
-    }
+    Task SaveAsync();
 }

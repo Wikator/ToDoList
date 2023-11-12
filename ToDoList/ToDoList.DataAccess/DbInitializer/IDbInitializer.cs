@@ -1,7 +1,6 @@
-﻿namespace ToDoList.DataAccess.DbInitializer
+﻿namespace ToDoList.DataAccess.DbInitializer;
+
+public interface IDbInitializer
 {
-    public interface IDbInitializer
-    {
-        Task InitializeAsync();
-    }
+    Task InitializeAsync();
 }

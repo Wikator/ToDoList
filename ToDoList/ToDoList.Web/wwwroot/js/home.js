@@ -2,8 +2,7 @@
     $('#TimeButton').click(function () {
         if ($('.Time').hasClass("d-none")) {
             $('.Time').removeClass("d-none");
-        }
-        else {
+        } else {
             $('.Time').addClass("d-none");
         }
     });
@@ -11,10 +10,9 @@
         if ($('#GroupTasks').hasClass("d-none")) {
             $('#GroupTasks').removeClass("d-none");
             $('#AllTasks').addClass("d-none");
-        }
-        else {
+        } else {
             $('#GroupTasks').addClass("d-none");
             $('#AllTasks').removeClass("d-none");
         }
     });
-})
+});

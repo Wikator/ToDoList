@@ -1,66 +1,66 @@
 ﻿@model IEnumerable<Comment>
 
 @{
-	ViewData["Title"] = "Comments";
+    ViewData["Title"] = "Comments";
 }
 
 <div class="card shadow border-0 mt-4">
-	<div class="card-header bg-gradient ml-0 py-3">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1 class="text-black py-2">Comments</h1>
-			</div>
-		</div>
-	</div>
-	<div class="card-body bg-primary bg-gradient p-4">
-		<div class="row pt-2">
-			<div class="col-12 text-end">
-				<a asp-action="Create" asp-route-collegeId="@ViewBag.CollegeId" class="btn btn-primary">
-					<i class="bi bi-plus-circle"></i> &nbsp; Create New Comment
-				</a>
-			</div>
-		</div>
+    <div class="card-header bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-black py-2">Comments</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-primary bg-gradient p-4">
+        <div class="row pt-2">
+            <div class="col-12 text-end">
+                <a asp-action="Create" asp-route-collegeId="@ViewBag.CollegeId" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> &nbsp; Create New Comment
+                </a>
+            </div>
+        </div>
 
-		<br /><br />
-		<div class="table-responsive">
-			<table class="table table-striped table-bordered" style="width:100%">
-				<thead>
-					<tr>
-						<th>
-							Author
-						</th>
-						<th>
-							Text
-						</th>
-						<th>
-							Action
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach (Comment obj in Model)
-					{
-						<tr>
-							<td width="25%">
-								@obj.ApplicationUser.Nickname
-							</td>
-							<td width="50%">
-								@obj.Text
-							</td>
-							<td width="25%">
-								<div class="w-75 btn-group" role="group">
-									<a asp-action="Details" asp-route-collegeId="@obj.CollegeId" asp-route-commentId="@obj.Id" class="btn btn-primary mx-2">Details</a>
-								</div>
-							</td>
-						</tr>
-					}
-				</tbody>
-			</table>
-		</div>
-	</div>
+        <br/><br/>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Text
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="25%">
+                            @obj.ApplicationUser.Nickname
+                        </td>
+                        <td width="50%">
+                            @obj.Text
+                        </td>
+                        <td width="25%">
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-action="Details" asp-route-collegeId="@obj.CollegeId" asp-route-commentId="@obj.Id" class="btn btn-primary mx-2">Details</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
 @section Scripts {
-	<script src="~/js/delete.js"></script>
+    <script src="~/js/delete.js"></script>
 }

@@ -1,49 +1,52 @@
 #nullable disable
 
+#region
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace ToDoList.Web.Areas.Owner.Pages.RoleManager
+#endregion
+
+namespace ToDoList.Web.Areas.Owner.Pages.RoleManager;
+
+[Authorize(Policy = "RequireOwner")]
+[Area("Owner")]
+public class UserRoleManagerModel : PageModel
 {
-    [Authorize(Policy = "RequireOwner")]
-    [Area("Owner")]
-    public class UserRoleManagerModel : PageModel
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public UserRoleManagerModel(UserManager<IdentityUser> userManager)
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        _userManager = userManager;
+    }
 
-        public UserRoleManagerModel(UserManager<IdentityUser> userManager)
+    public IEnumerable<InputModel> Input { get; set; }
+
+
+    public async Task<IActionResult> OnGetAsync()
+    {
+        IEnumerable<IdentityUser> users = await _userManager.Users.ToListAsync();
+
+        Input = users.Select(u =>
         {
-            _userManager = userManager;
-        }
+            var userRoles = _userManager.GetRolesAsync(u);
 
-        public IEnumerable<InputModel> Input { get; set; }
-
-        public class InputModel
-        {
-            public IdentityUser IdentityUser { get; set; }
-            public string Role { get; set; }
-        }
-
-
-        public async Task<IActionResult> OnGetAsync()
-        {
-            IEnumerable<IdentityUser> users = await _userManager.Users.ToListAsync();
-
-            Input = users.Select(u =>
+            return new InputModel
             {
-                Task<IList<string>> userRoles = _userManager.GetRolesAsync(u);
+                IdentityUser = u,
+                Role = userRoles.Result[0]
+            };
+        });
 
-                return new InputModel()
-                {
-                    IdentityUser = u,
-                    Role = userRoles.Result[0]
-                };
-            });
+        return Page();
+    }
 
-            return Page();
-        }
+    public class InputModel
+    {
+        public IdentityUser IdentityUser { get; set; }
+        public string Role { get; set; }
     }
 }

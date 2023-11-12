@@ -1,14 +1,17 @@
-﻿using System.Security.Claims;
+﻿#region
 
-namespace ToDoList.Web.Extensions
+using System.Security.Claims;
+
+#endregion
+
+namespace ToDoList.Web.Extensions;
+
+public static class ClaimsPrincipalExtensions
 {
-	public static class ClaimsPrincipalExtensions
-	{
-		public static string GetLoggedInUserId(this ClaimsPrincipal user)
-		{
-			ClaimsIdentity claimsIdentity = (user.Identity as ClaimsIdentity)!;
-			Claim claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
-			return claim.Value;
-		}
-	}
+    public static string GetLoggedInUserId(this ClaimsPrincipal user)
+    {
+        var claimsIdentity = (user.Identity as ClaimsIdentity)!;
+        var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier)!;
+        return claim.Value;
+    }
 }

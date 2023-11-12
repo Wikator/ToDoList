@@ -11,16 +11,15 @@
         buttonsStyling: false,
         focusCancel: true,
         reverseButtons: true
-    }).then((result) => {
+    }).then(result => {
         if (result.isConfirmed) {
             $.ajax({
-                url: url,
+                url,
                 type: 'DELETE',
-                success: function (data) {
+                success(data) {
                     if (data.success) {
                         location.reload(true);
-                    }
-                    else {
+                    } else {
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',

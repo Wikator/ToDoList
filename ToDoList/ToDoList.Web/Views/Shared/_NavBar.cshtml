@@ -10,17 +10,17 @@
                 <navbar-link asp-area="Customer" asp-controller="Home" asp-action="Index">Home</navbar-link>
                 <navbar-link asp-area="Customer" asp-controller="Home" asp-action="About">About</navbar-link>
                 <navbar-link asp-area="Customer" asp-controller="College" asp-action="Index">Tasks</navbar-link>
-                @if (User.IsInRole(SD.Role_User_Admin) || User.IsInRole(SD.Role_User_Owner))
+                @if (User.IsInRole(SD.RoleUserAdmin) || User.IsInRole(SD.RoleUserOwner))
                 {
                     <navbar-link asp-area="Admin" asp-controller="Subject" asp-action="Index">Subjects</navbar-link>
-                    @if (User.IsInRole(SD.Role_User_Owner))
+                    @if (User.IsInRole(SD.RoleUserOwner))
                     {
                         <navbar-link asp-area="Owner" asp-controller="Group" asp-action="Index">Groups</navbar-link>
                         <navbar-link asp-area="Owner" asp-page="/RoleManager/UserRoleManager">Users</navbar-link>
                     }
-                }              
+                }
             </ul>
-            <partial name="_LoginPartial" />
+            <partial name="_LoginPartial"/>
         </div>
     </div>
 </nav>

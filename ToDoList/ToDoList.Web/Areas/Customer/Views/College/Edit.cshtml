@@ -1,57 +1,58 @@
-﻿@model CollegeVM
+﻿@using ToDoList.Utility
+@model CollegeVM
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <div class="card shadow border-0 mt-4">
-	<div class="card-header bg-gradient ml-0 py-3">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1 class="text-black py-2">Edit Task</h1>
-			</div>
-		</div>
-	</div>
-	<div class="card-body p-4">
-		<form method="post" asp-action="Edit">
-			<div class="p-3 row">
-				<input asp-for="ListItem.ApplicationUserId" hidden />
-				<input asp-for="ListItem.Id" hidden />
-				<partial name="_Upsert" model="@Model" />
-				<div class="form-floating py-2 col-12">
-					<input asp-for="ListItem.Deadline" class="form-control border-0 shadow" placeholder="Deadline" />
-					<label asp-for="ListItem.Deadline" class="ms-2">Deadline</label>
-					<span asp-validation-for="ListItem.Deadline" class="text-danger"></span>
-				</div>
-				@if (User.IsInRole(ToDoList.Utility.SD.Role_User_Admin) || User.IsInRole(ToDoList.Utility.SD.Role_User_Owner))
-				{
-					<div class="mb-3 col-12">
-						<div class=" form-check form-switch">
-							<label asp-for="ListItem.HomePageCollege" class="form-check-label"></label>
-							<input asp-for="ListItem.HomePageCollege" type="checkbox" class="form-check-input bg-secondary" />
-							<span asp-validation-for="ListItem.HomePageCollege" class="text-danger"></span>
-						</div>
-					</div>
-				}
-				else
-				{
-					<input asp-for="ListItem.HomePageCollege" type="checkbox" hidden />
-				}
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary">Edit</button>
-					<a asp-action="Index" class="btn btn-dark" style="width:200px">
-						Back to list
-					</a>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="card-header bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-black py-2">Edit Task</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" asp-action="Edit">
+            <div class="p-3 row">
+                <input asp-for="ListItem.ApplicationUserId" hidden/>
+                <input asp-for="ListItem.Id" hidden/>
+                <partial name="_Upsert" model="@Model"/>
+                <div class="form-floating py-2 col-12">
+                    <input asp-for="ListItem.Deadline" class="form-control border-0 shadow" placeholder="Deadline"/>
+                    <label asp-for="ListItem.Deadline" class="ms-2">Deadline</label>
+                    <span asp-validation-for="ListItem.Deadline" class="text-danger"></span>
+                </div>
+                @if (User.IsInRole(SD.RoleUserAdmin) || User.IsInRole(SD.RoleUserOwner))
+                {
+                    <div class="mb-3 col-12">
+                        <div class=" form-check form-switch">
+                            <label asp-for="ListItem.HomePageCollege" class="form-check-label"></label>
+                            <input asp-for="ListItem.HomePageCollege" type="checkbox" class="form-check-input bg-secondary"/>
+                            <span asp-validation-for="ListItem.HomePageCollege" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <input asp-for="ListItem.HomePageCollege" type="checkbox" hidden/>
+                }
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <a asp-action="Index" class="btn btn-dark" style="width:200px">
+                        Back to list
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 
 @section Scripts{
-	@{
-		<partial name="_ValidationScriptsPartial" />
-		<script src="~/js/group_input.js"></script>
-	}
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+        <script src="~/js/group_input.js"></script>
+    }
 }

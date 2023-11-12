@@ -6,17 +6,17 @@
 }
 
 <h3>@ViewData["Title"]</h3>
-<partial name="_StatusMessage" for="StatusMessage" />
+<partial name="_StatusMessage" for="StatusMessage"/>
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
+                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled/>
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.ApplicationUser.Nickname" class="form-control" placeholder="Please enter your nickname." />
+                <input asp-for="Input.ApplicationUser.Nickname" class="form-control" placeholder="Please enter your nickname."/>
                 <label asp-for="Input.ApplicationUser.Nickname" class="form-label"></label>
                 <span asp-validation-for="Input.ApplicationUser.Nickname" class="text-danger"></span>
             </div>
@@ -38,5 +38,5 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
 }

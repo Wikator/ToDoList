@@ -3,247 +3,256 @@
 
 @if (Model.CollegePastDeadlineList.Any())
 {
-	<br />
-	<br />
+    <br/>
+    <br/>
 
-	<div class="card shadow border-0 mt-4">
-		<div class="card-header bg-gradient ml-0 py-3">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h1 class="text-danger py-2">Tasks past deadline</h1>
-				</div>
-			</div>
-		</div>
-		<div class="card-body bg-primary bg-gradient bg-primary p-4">
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th scope="col">
-								Title
-							</th>
-							<th scope="col">
-								Description
-							</th>
-							<th scope="col">
-								Deadline
-							</th>
-							<th scope="col">
-								Subject
-							</th>
-							<th scope="col">
-								Action
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (College obj in Model.CollegePastDeadlineList)
-						{
-							<tr>
-								<td width="15%">
-									@obj.Title
-								</td>
-								<td width="55%">
-									@obj.Description
-								</td>
-								<td width="20%">
-									@obj.Deadline.ToString("dd/MM/yyyy")
-									<span class="Time d-none"><br />@String.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)</span>
-									<br />
-									@obj.Deadline.DayOfWeek
-									<br />
-									@{
-										int daysAgo = Math.Abs((obj.Deadline.Date - DateTime.Now.Date).Days);
-										<div class="text-danger">
-											@String.Join(" ", new string[2] {daysAgo.ToString(), daysAgo == 1 ? "day ago" : "days ago"})
-										</div>
-									}
-								</td>
-								<td width="20%">
-									@obj.Subject.Name
-								</td>
-								<td width="20%">
-									<div class="w-75 d-flex justify-content-between" role="group">
-										<a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-green-hover"><i class="bi bi-check"></i></a>
-										<a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
-									</div>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="text-danger py-2">Tasks past deadline</h1>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-primary bg-gradient bg-primary p-4">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            Title
+                        </th>
+                        <th scope="col">
+                            Description
+                        </th>
+                        <th scope="col">
+                            Deadline
+                        </th>
+                        <th scope="col">
+                            Subject
+                        </th>
+                        <th scope="col">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var obj in Model.CollegePastDeadlineList)
+                    {
+                        <tr>
+                            <td width="15%">
+                                @obj.Title
+                            </td>
+                            <td width="55%">
+                                @obj.Description
+                            </td>
+                            <td width="20%">
+                                @obj.Deadline.ToString("dd/MM/yyyy")
+                                <span class="Time d-none">
+                                    <br/>@string.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)
+                                </span>
+                                <br/>
+                                @obj.Deadline.DayOfWeek
+                                <br/>
+                                @{
+                                    var daysAgo = Math.Abs((obj.Deadline.Date - DateTime.Now.Date).Days);
+                                    <div class="text-danger">
+                                        @string.Join(" ", daysAgo.ToString(), daysAgo == 1 ? "day ago" : "days ago")
+                                    </div>
+                                }
+                            </td>
+                            <td width="20%">
+                                @obj.Subject.Name
+                            </td>
+                            <td width="20%">
+                                <div class="w-75 d-flex justify-content-between" role="group">
+                                    <a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-green-hover">
+                                        <i class="bi bi-check"></i>
+                                    </a>
+                                    <a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 
-<br />
-<br />
+<br/>
+<br/>
 
 @if (Model.CollegeList.Any())
 {
-	<div class="card shadow border-0 mt-4">
-		<div class="card-header bg-gradient ml-0 py-3">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h1 class="text-white py-2">Scheduled tasks</h1>
-				</div>
-			</div>
-		</div>
-		<div class="card-body bg-gradient bg-primary p-4">
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th scope="col">
-								Title
-							</th>
-							<th scope="col">
-								Description
-							</th>
-							<th scope="col">
-								Deadline
-							</th>
-							<th scope="col">
-								Subject
-							</th>
-							<th scope="col">
-								Action
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (var obj in Model.CollegeList)
-						{
-							<tr>
-								<td width="15%">
-									@obj.Title
-								</td>
-								<td width="45%">
-									@obj.Description
-								</td>
-								<td width="20%">
-									@obj.Deadline.ToString("dd/MM/yyyy")
-									<span class="Time d-none"><br />@String.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)</span>
-									<br />
-									@obj.Deadline.DayOfWeek
-									<br />
-									@{
-										int daysLeft = (obj.Deadline.Date - DateTime.Now.Date).Days;
-										@if (daysLeft <= 1)
-										{
-											<div class="text-danger">
-												@String.Join(" ", new string[2] {daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days"})
-											</div>
-										}
-										else
-										{
-											<div>
-												@String.Join(" ", new string[2] {daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days"})
-											</div>
-										}
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="text-white py-2">Scheduled tasks</h1>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-gradient bg-primary p-4">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            Title
+                        </th>
+                        <th scope="col">
+                            Description
+                        </th>
+                        <th scope="col">
+                            Deadline
+                        </th>
+                        <th scope="col">
+                            Subject
+                        </th>
+                        <th scope="col">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var obj in Model.CollegeList)
+                    {
+                        <tr>
+                            <td width="15%">
+                                @obj.Title
+                            </td>
+                            <td width="45%">
+                                @obj.Description
+                            </td>
+                            <td width="20%">
+                                @obj.Deadline.ToString("dd/MM/yyyy")
+                                <span class="Time d-none">
+                                    <br/>@string.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)
+                                </span>
+                                <br/>
+                                @obj.Deadline.DayOfWeek
+                                <br/>
+                                @{
+                                    var daysLeft = (obj.Deadline.Date - DateTime.Now.Date).Days;
+                                    @if (daysLeft <= 1)
+                                    {
+                                        <div class="text-danger">
+                                            @string.Join(" ", daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days")
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+                                            @string.Join(" ", daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days")
+                                        </div>
+                                    }
 
-									}
-								</td>
-								<td width="20%">
-									@obj.Subject.Name
-								</td>
-								<td width="20%">
-									<div class="w-75 d-flex justify-content-between" role="group">
-										<a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-green-hover"><i class="bi bi-check"></i></a>
-										<a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
-									</div>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
-
+                                }
+                            </td>
+                            <td width="20%">
+                                @obj.Subject.Name
+                            </td>
+                            <td width="20%">
+                                <div class="w-75 d-flex justify-content-between" role="group">
+                                    <a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-green-hover">
+                                        <i class="bi bi-check"></i>
+                                    </a>
+                                    <a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
 
-<br />
-<br />
+<br/>
+<br/>
 
 @if (Model.CompletedCollegeList.Any())
 {
-	<div class="card shadow border-0 mt-4">
-		<div class="card-header bg-gradient ml-0 py-3">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h1 class="text-success py-2">Completed tasks</h1>
-				</div>
-			</div>
-		</div>
-		<div class="card-body bg-gradient bg-primary p-4">
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th scope="col">
-								Title
-							</th>
-							<th scope="col">
-								Description
-							</th>
-							<th scope="col">
-								Deadline
-							</th>
-							<th scope="col">
-								Subject
-							</th>
-							<th scope="col">
-								Action
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach (College obj in Model.CompletedCollegeList)
-						{
-							<tr>
-								<td width="15%">
-									@obj.Title
-								</td>
-								<td width="45%">
-									@obj.Description
-								</td>
-								<td width="20%">
-									@obj.Deadline.ToString("dd/MM/yyyy")
-									<span class="Time d-none"><br />@String.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)</span>
-									<br />
-									@obj.Deadline.DayOfWeek
-									<br />
-									@{
-										int daysLeft = (obj.Deadline.Date - DateTime.Now.Date).Days;
-										if (daysLeft >= 0)
-										{
-											@String.Join(" ", new string[2] {daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days"})
-										}
-										else
-										{
-											int daysAgo = Math.Abs(daysLeft);
-											@String.Join(" ", new string[2] {daysAgo.ToString(), daysAgo == 1 ? "day ago" : "days ago"})
-										}
-									}
-								</td>
-								<td width="20%">
-									@obj.Subject.Name
-								</td>
-								<td width="20%">
-									<div class="w-75 d-flex justify-content-between" role="group">
-										<a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-red-hover"><i class="bi bi-x"></i></a>
-										<a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
-									</div>
-								</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="text-success py-2">Completed tasks</h1>
+                </div>
+            </div>
+        </div>
+        <div class="card-body bg-gradient bg-primary p-4">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            Title
+                        </th>
+                        <th scope="col">
+                            Description
+                        </th>
+                        <th scope="col">
+                            Deadline
+                        </th>
+                        <th scope="col">
+                            Subject
+                        </th>
+                        <th scope="col">
+                            Action
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var obj in Model.CompletedCollegeList)
+                    {
+                        <tr>
+                            <td width="15%">
+                                @obj.Title
+                            </td>
+                            <td width="45%">
+                                @obj.Description
+                            </td>
+                            <td width="20%">
+                                @obj.Deadline.ToString("dd/MM/yyyy")
+                                <span class="Time d-none">
+                                    <br/>@string.Format("{0:00}:{1:00}", obj.Deadline.Hour, obj.Deadline.Minute)
+                                </span>
+                                <br/>
+                                @obj.Deadline.DayOfWeek
+                                <br/>
+                                @{
+                                    var daysLeft = (obj.Deadline.Date - DateTime.Now.Date).Days;
+                                    if (daysLeft >= 0)
+                                    {
+                                        @string.Join(" ", daysLeft.ToString(), daysLeft == 1 ? "more day" : "more days")
+                                    }
+                                    else
+                                    {
+                                        var daysAgo = Math.Abs(daysLeft);
+                                        @string.Join(" ", daysAgo.ToString(), daysAgo == 1 ? "day ago" : "days ago")
+                                    }
+                                }
+                            </td>
+                            <td width="20%">
+                                @obj.Subject.Name
+                            </td>
+                            <td width="20%">
+                                <div class="w-75 d-flex justify-content-between" role="group">
+                                    <a asp-action="MarkAsCompleted" asp-route-id="@obj.Id" class="btn btn-primary mx-2 btn-round btn-red-hover">
+                                        <i class="bi bi-x"></i>
+                                    </a>
+                                    <a asp-area="Customer" asp-controller="Comment" asp-action="Index" asp-route-collegeId="@obj.Id" class="btn btn-primary mx-2">Comments</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 }
-
-

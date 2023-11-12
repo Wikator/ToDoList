@@ -2,9 +2,8 @@
     $('#TimeButton').click(function () {
         if ($('.Time').hasClass("d-none")) {
             $('.Time').removeClass("d-none");
-        }
-        else {
+        } else {
             $('.Time').addClass("d-none");
         }
     });
-})
+});

@@ -1,31 +1,31 @@
 ﻿@model SubjectVM
 
 
-@if(Model.Subject.SubjectType == SubjectType.Standard)
+@if (Model.Subject.SubjectType == SubjectType.Standard)
 {
-	<div class="form-floating py-2 col-12">
-		<input asp-for="Subject.Name" class="form-control border-0 shadow" placeholder="Name" />
-		<label asp-for="Subject.Name" class="ms-2"></label>
-		<span asp-validation-for="Subject.Name" class="text-danger"></span>
-	</div>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Subject.Name" class="form-control border-0 shadow" placeholder="Name"/>
+        <label asp-for="Subject.Name" class="ms-2"></label>
+        <span asp-validation-for="Subject.Name" class="text-danger"></span>
+    </div>
 }
 else
 {
-	<input asp-for="Subject.Name" hidden />
-	<div class="form-floating py-2 col-12">
-		<input asp-for="Subject.Name" class="form-control border-0 shadow" placeholder="Name" disabled />
-		<label asp-for="Subject.Name" class="ms-2"></label>
-		<span asp-validation-for="Subject.Name" class="text-danger"></span>
-	</div>
+    <input asp-for="Subject.Name" hidden/>
+    <div class="form-floating py-2 col-12">
+        <input asp-for="Subject.Name" class="form-control border-0 shadow" placeholder="Name" disabled/>
+        <label asp-for="Subject.Name" class="ms-2"></label>
+        <span asp-validation-for="Subject.Name" class="text-danger"></span>
+    </div>
 }
 
-@for (int i = 0; i < Model.SubjectTimes.Length; i++)
+@for (var i = 0; i < Model.SubjectTimes.Length; i++)
 {
-	<input asp-for="SubjectTimes[i].SubjectId" type="hidden" />
-	<input asp-for="SubjectTimes[i].GroupId" type="hidden" />
-	<div class="form-floating py-2 col-6">
-		<input asp-for="SubjectTimes[i].Time" class="form-control border-0 shadow" placeholder="Time" />
-		<label asp-for="SubjectTimes[i].Time" class="ms-2">@Model.SubjectTimes[i].Group.Name</label>
-		<span asp-validation-for="SubjectTimes[i].Time" class="text-danger"></span>
-	</div>
+    <input asp-for="SubjectTimes[i].SubjectId" type="hidden"/>
+    <input asp-for="SubjectTimes[i].GroupId" type="hidden"/>
+    <div class="form-floating py-2 col-6">
+        <input asp-for="SubjectTimes[i].Time" class="form-control border-0 shadow" placeholder="Time"/>
+        <label asp-for="SubjectTimes[i].Time" class="ms-2">@Model.SubjectTimes[i].Group.Name</label>
+        <span asp-validation-for="SubjectTimes[i].Time" class="text-danger"></span>
+    </div>
 }

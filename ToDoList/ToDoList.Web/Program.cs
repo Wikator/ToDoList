@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using ToDoList.DataAccess.Data;
+#region
+
 using ToDoList.DataAccess.DbInitializer;
 using ToDoList.Web.Extensions;
+
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,18 +35,17 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
-
+return;
 
 
 async Task SeedDatabase()
 {
     using var scope = app.Services.CreateScope();
-    var DbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-    await DbInitializer.InitializeAsync();
-
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+    await dbInitializer.InitializeAsync();
 }

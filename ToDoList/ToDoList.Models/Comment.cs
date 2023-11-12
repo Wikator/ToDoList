@@ -1,34 +1,32 @@
 ﻿#nullable disable
 
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+#region
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace ToDoList.Models
+#endregion
+
+namespace ToDoList.Models;
+
+public class Comment
 {
-	public class Comment
-	{
-		[Key]
-		public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
-		public int CollegeId { get; set; }
+    public int CollegeId { get; set; }
 
-		[ValidateNever]
-		[ForeignKey(nameof(CollegeId))]
-		public College College { get; set; }
+    [ValidateNever]
+    [ForeignKey(nameof(CollegeId))]
+    public College College { get; set; }
 
-		[Required]
-		public string ApplicationUserId { get; set; }
+    [Required] public string ApplicationUserId { get; set; }
 
-		[ValidateNever]
-		[ForeignKey(nameof(ApplicationUserId))]
-		public ApplicationUser ApplicationUser { get; set; }
+    [ValidateNever]
+    [ForeignKey(nameof(ApplicationUserId))]
+    public ApplicationUser ApplicationUser { get; set; }
 
-		[Required]
-		[MaxLength(1000)]
-		public string Text { get; set; }
+    [Required] [MaxLength(1000)] public string Text { get; set; }
 
-		[Display(Name = "File")]
-		public string FileUrl { get; set; }
-	}
+    [Display(Name = "File")] public string FileUrl { get; set; }
 }

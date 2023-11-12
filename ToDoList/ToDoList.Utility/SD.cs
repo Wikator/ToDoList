@@ -1,9 +1,8 @@
-﻿namespace ToDoList.Utility
+﻿namespace ToDoList.Utility;
+
+public static class SD
 {
-    public static class SD
-    {
-        public const string Role_User_Owner = "Owner";
-        public const string Role_User_Admin = "Admin";
-        public const string Role_User_Customer = "Customer";
-    }
+    public const string RoleUserOwner = "Owner";
+    public const string RoleUserAdmin = "Admin";
+    public const string RoleUserCustomer = "Customer";
 }

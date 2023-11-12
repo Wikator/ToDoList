@@ -1,27 +1,28 @@
 ﻿#nullable disable
 
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+#region
+
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace ToDoList.Models
+#endregion
+
+namespace ToDoList.Models;
+
+public class CompletedCollege
 {
-    public class CompletedCollege
-    {
-        [Key]
-        public int Id { get; set; }
+    [Key] public int Id { get; set; }
 
-        public int CollegeId { get; set; }
+    public int CollegeId { get; set; }
 
-        [ForeignKey("CollegeId")]
-        [ValidateNever]
-        public College College { get; set; }
+    [ForeignKey("CollegeId")]
+    [ValidateNever]
+    public College College { get; set; }
 
-        [Required]
-        public string ApplicationUserId { get; set; }
+    [Required] public string ApplicationUserId { get; set; }
 
-        [ForeignKey("ApplicationUserId")]
-        [ValidateNever]
-        public ApplicationUser ApplicationUser { get; set; }
-    }
+    [ForeignKey("ApplicationUserId")]
+    [ValidateNever]
+    public ApplicationUser ApplicationUser { get; set; }
 }

@@ -1,39 +1,39 @@
 ﻿@model Comment
 
 @{
-	ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit";
 }
 
 <div class="card shadow border-0 mt-4">
-	<div class="card-header bg-gradient ml-0 py-3">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1 class="text-black py-2">Create Comment</h1>
-			</div>
-		</div>
-	</div>
-	<div class="card-body bg-primary p-4">
-		<form method="post" asp-action="Edit" enctype="multipart/form-data">
-			<div class="p-3 row">
-				<input type="hidden" asp-for="Id" />
-				<input type="hidden" asp-for="CollegeId" />
-				<input type="hidden" asp-for="ApplicationUserId" />
-				<input type="hidden" asp-for="FileUrl" />
-				<partial name="_Upsert" model="@Model" />
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary">Edit</button>
-					<a asp-action="Index" asp-route-collegeId="@Model.CollegeId" class="btn btn-dark" style="width:200px">
-						Back to list
-					</a>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="card-header bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-black py-2">Create Comment</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-primary p-4">
+        <form method="post" asp-action="Edit" enctype="multipart/form-data">
+            <div class="p-3 row">
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="CollegeId"/>
+                <input type="hidden" asp-for="ApplicationUserId"/>
+                <input type="hidden" asp-for="FileUrl"/>
+                <partial name="_Upsert" model="@Model"/>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                    <a asp-action="Index" asp-route-collegeId="@Model.CollegeId" class="btn btn-dark" style="width:200px">
+                        Back to list
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 
 @section Scripts{
-	@{
-		<partial name="_ValidationScriptsPartial" />
-	}
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
 }

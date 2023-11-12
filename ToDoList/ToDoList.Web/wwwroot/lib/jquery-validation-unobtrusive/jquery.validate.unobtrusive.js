@@ -60,8 +60,7 @@
         if (replace) {
             container.empty();
             error.removeClass("input-validation-error").appendTo(container);
-        }
-        else {
+        } else {
             error.hide();
         }
     }
@@ -136,28 +135,28 @@
                 options: {  // options structure passed to jQuery Validate's validate() method
                     errorClass: defaultOptions.errorClass || "input-validation-error",
                     errorElement: defaultOptions.errorElement || "span",
-                    errorPlacement: function () {
+                    errorPlacement() {
                         onError.apply(form, arguments);
                         execInContext("errorPlacement", arguments);
                     },
-                    invalidHandler: function () {
+                    invalidHandler() {
                         onErrors.apply(form, arguments);
                         execInContext("invalidHandler", arguments);
                     },
                     messages: {},
                     rules: {},
-                    success: function () {
+                    success() {
                         onSuccess.apply(form, arguments);
                         execInContext("success", arguments);
                     }
                 },
-                attachValidation: function () {
+                attachValidation() {
                     $form
                         .off("reset." + data_validation, onResetProxy)
                         .on("reset." + data_validation, onResetProxy)
                         .validate(this.options);
                 },
-                validate: function () {  // a validation function that is called by unobtrusive Ajax
+                validate() {  // a validation function that is called by unobtrusive Ajax
                     $form.validate();
                     return $form.valid();
                 }
@@ -171,7 +170,7 @@
     $jQval.unobtrusive = {
         adapters: [],
 
-        parseElement: function (element, skipAttach) {
+        parseElement(element, skipAttach) {
             /// <summary>
             /// Parses a single HTML element for unobtrusive validation attributes.
             /// </summary>
@@ -205,24 +204,24 @@
                     });
 
                     this.adapt({
-                        element: element,
-                        form: form,
-                        message: message,
+                        element,
+                        form,
+                        message,
                         params: paramValues,
-                        rules: rules,
-                        messages: messages
+                        rules,
+                        messages
                     });
                 }
             });
 
-            $.extend(rules, { "__dummy__": true });
+            $.extend(rules, {"__dummy__": true});
 
             if (!skipAttach) {
                 valInfo.attachValidation();
             }
         },
 
-        parse: function (selector) {
+        parse(selector) {
             /// <summary>
             /// Parses all the HTML elements in the specified selector. It looks for input elements decorated
             /// with the [data-val=true] attribute value and enables validation according to the data-val-*
@@ -268,7 +267,7 @@
             fn = params;
             params = [];
         }
-        this.push({ name: adapterName, params: params, adapt: fn });
+        this.push({name: adapterName, params, adapt: fn});
         return this;
     };
 
@@ -308,11 +307,9 @@
 
             if (min && max) {
                 setValidationValues(options, minMaxRuleName, [min, max]);
-            }
-            else if (min) {
+            } else if (min) {
                 setValidationValues(options, minRuleName, min);
-            }
-            else if (max) {
+            } else if (max) {
                 setValidationValues(options, maxRuleName, max);
             }
         });
@@ -344,7 +341,7 @@
         }
 
         match = new RegExp(params).exec(value);
-        return (match && (match.index === 0) && (match[0].length === value.length));
+        return match && match.index === 0 && match[0].length === value.length;
     });
 
     $jQval.addMethod("nonalphamin", function (value, element, nonalphamin) {
@@ -386,10 +383,10 @@
     });
     adapters.add("remote", ["url", "type", "additionalfields"], function (options) {
         var value = {
-            url: options.params.url,
-            type: options.params.type || "GET",
-            data: {}
-        },
+                url: options.params.url,
+                type: options.params.type || "GET",
+                data: {}
+            },
             prefix = getModelPrefix(options.element.name);
 
         $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
@@ -399,8 +396,7 @@
                 // For checkboxes and radio buttons, only pick up values from checked fields.
                 if (field.is(":checkbox")) {
                     return field.filter(":checked").val() || field.filter(":hidden").val() || '';
-                }
-                else if (field.is(":radio")) {
+                } else if (field.is(":radio")) {
                     return field.filter(":checked").val() || '';
                 }
                 return field.val();

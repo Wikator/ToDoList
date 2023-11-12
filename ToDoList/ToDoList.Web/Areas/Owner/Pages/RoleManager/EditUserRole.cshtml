@@ -2,42 +2,42 @@
 @model EditUserRoleModel
 
 @{
-	ViewData["Title"] = "Manage Role";
+    ViewData["Title"] = "Manage Role";
 }
 
 
 <div class="card shadow border-0 mt-4">
-	<div class="card-header bg-gradient ml-0 py-3">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1 class="text-black py-2">Manage @Model.Input.UserName's Role</h1>
-			</div>
-		</div>
-	</div>
-	<div class="card-body bg-primary p-4">
-		<form method="post" asp-area="Owner" asp-page="/RoleManager/EditUserRole">
-			<input asp-for="Input.Id" hidden />
-			<div class="p-3 mt-4">
-				<div class="form-floating py-2 col-6">
-					<select asp-for="Input.Role" asp-items="@Model.Input.Roles" class="form-select border-0 shadow">
-					</select>
-					<label asp-for="Input.Role" class="ms-2"></label>
-					<span asp-validation-for="Input.Role" class="text-danger"></span>
-				</div>
-				<div class="mb-2 mt-4">
-					<button type="submit" class="btn btn-primary">Update</button>
-					<a asp-area="Owner" asp-page="/RoleManager/UserRoleManager" class="btn btn-dark" style="width:200px">
-						Back to list
-					</a>
-				</div>
-			</div>
-		</form>
-	</div>
+    <div class="card-header bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-black py-2">Manage @Model.Input.UserName's Role</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body bg-primary p-4">
+        <form method="post" asp-area="Owner" asp-page="/RoleManager/EditUserRole">
+            <input asp-for="Input.Id" hidden/>
+            <div class="p-3 mt-4">
+                <div class="form-floating py-2 col-6">
+                    <select asp-for="Input.Role" asp-items="@Model.Input.Roles" class="form-select border-0 shadow">
+                    </select>
+                    <label asp-for="Input.Role" class="ms-2"></label>
+                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                </div>
+                <div class="mb-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a asp-area="Owner" asp-page="/RoleManager/UserRoleManager" class="btn btn-dark" style="width:200px">
+                        Back to list
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 
 @section Scripts{
-	@{
-		<partial name="_ValidationScriptsPartial" />
-	}
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
 }
